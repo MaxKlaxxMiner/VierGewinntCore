@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace VierGewinntCore.Test
 {
   [TestClass]
-  public sealed class SpielfeldValidateTests
+  public sealed class ValidateTests
   {
     #region # // --- Helper-Methoden ---
     /// <summary>
