@@ -1,10 +1,7 @@
 ﻿#region # using *.*
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using VierGewinntCore;
 
 #endregion
 
@@ -14,7 +11,17 @@ namespace FourConsole
   {
     static void Main()
     {
+      var feld = new SpielFeld();
 
+      for (; ; )
+      {
+        Console.WriteLine(feld);
+
+        switch (Console.ReadKey().Key)
+        {
+          case ConsoleKey.Escape: return;
+        }
+      }
     }
   }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Text;
 // ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable MemberCanBeInternal
 
 #endregion
 
@@ -353,6 +354,11 @@ namespace VierGewinntCore
     #endregion
 
     #region # // --- Konstruktor ---
+    /// <summary>
+    /// Konstruktor
+    /// </summary>
+    public SpielFeld() : this(new string(' ', FeldAnzahl)) { }
+
     /// <summary>
     /// Konstruktor
     /// </summary>
