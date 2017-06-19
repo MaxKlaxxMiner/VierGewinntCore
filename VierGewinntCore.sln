@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VierGewinntCore", "VierGewinntCore\VierGewinntCore.csproj", "{118D3959-5066-4312-9C7B-AA0885009EAA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FourConsole", "FourConsole\FourConsole.csproj", "{061C6D08-E3F0-4713-97FD-5EFB072C5F2A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VierGewinntCore.Test", "VierGewinntCore.Test\VierGewinntCore.Test.csproj", "{654BEB47-F985-4491-ABE7-7FC1DA1278E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Research", "Research\Research.csproj", "{0809E848-CF04-4F56-8EDE-D066FE6EA718}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{654BEB47-F985-4491-ABE7-7FC1DA1278E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{654BEB47-F985-4491-ABE7-7FC1DA1278E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{654BEB47-F985-4491-ABE7-7FC1DA1278E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0809E848-CF04-4F56-8EDE-D066FE6EA718}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0809E848-CF04-4F56-8EDE-D066FE6EA718}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0809E848-CF04-4F56-8EDE-D066FE6EA718}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0809E848-CF04-4F56-8EDE-D066FE6EA718}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
