@@ -22,21 +22,30 @@ namespace Research
 
     struct Solution
     {
-      public int id;
-      public int result;
+      public readonly int id;
+      public readonly int result;
+      public Solution(int id, int result)
+      {
+        this.id = id;
+        this.result = result;
+      }
+    }
+
+    static void BruteBitScan1Rec(Calc calc1, int val1, Solution[] sln, int slnCount)
+    {
+      for (int id = 0; id < MaxRowId; id++)
+      {
+        int result = CalcRowId(id, calc1, val1);
+        sln[slnCount] = new Solution(id, result);
+        slnCount++;
+      }
     }
 
     static void BruteBitScan1(Calc calc1, int val1)
     {
       var sln = new Solution[AllRows.Length];
-      int slnCount = 0;
 
-      int id = 0;
-      int result = 0;
-      if (Compare1(id, calc1, val1, result))
-      {
-        
-      }
+      BruteBitScan1Rec(calc1, val1, sln, 0);
     }
 
     static void BruteBitScans()

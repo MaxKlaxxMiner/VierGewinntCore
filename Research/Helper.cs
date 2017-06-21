@@ -39,20 +39,19 @@ namespace Research
     }
 
     /// <summary>
-    /// prüft, ob ein bestimmtes Ergebnis mit "einer" bestimmten Berechnung erhalten werden kann
+    /// berechnet eine bestimmte ID mit einer bestimmten Funktion aus und gibt das Ergebnis zurück
     /// </summary>
-    /// <param name="id">Quell-ID, welche geprüft werden soll</param>
+    /// <param name="id">Quell-ID, welche berechnet werden soll</param>
     /// <param name="calc1">Berechnungsfunktion</param>
     /// <param name="val1">der zu berechnende Wert</param>
-    /// <param name="result">das zu erwartende Ergebnis</param>
-    /// <returns>true, wenn dasa Ergebnis gepasst hat</returns>
-    static bool Compare1(int id, Calc calc1, int val1, int result)
+    /// <returns>das entsprechende Ergebnis</returns>
+    static int CalcRowId(int id, Calc calc1, int val1)
     {
       switch (calc1)
       {
-        case Calc.And: return (id & val1) == result;
-        case Calc.Or: return (id | val1) == result;
-        case Calc.Xor: return (id ^ val1) == result;
+        case Calc.And: return id & val1;
+        case Calc.Or: return id | val1;
+        case Calc.Xor: return id ^ val1;
         default: throw new NotSupportedException();
       }
     }
