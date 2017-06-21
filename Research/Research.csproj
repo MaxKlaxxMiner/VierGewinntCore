@@ -44,7 +44,7 @@
     <Compile Include="Calc.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="Helper.cs" />
-    <Compile Include="RowCounter.cs" />
+    <Compile Include="TestRowCounter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
