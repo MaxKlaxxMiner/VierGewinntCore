@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Research
 {
@@ -29,7 +30,7 @@ namespace Research
     static void RowCounter()
     {
       int count = 0;
-      foreach (var row in RowCounterBase(6))
+      foreach (var row in RowCounterBase(6).Where(ValidRow))
       {
         Console.WriteLine("{0,3} : \"{1}\"", count, row);
         count++;

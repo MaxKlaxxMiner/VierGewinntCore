@@ -22,13 +22,13 @@ namespace Research
     /// <summary>
     /// 127 Varianten, die in einer Senkrechten Reihe vorkommen können (6 Felder hoch)
     /// </summary>
-    static readonly string[] Rows = RowCounterBase(RowHeight).ToArray();
+    static readonly string[] AllRows = RowCounterBase(RowHeight).ToArray();
 
     /// <summary>
-    /// prüft, ob eine Spalte im aktiven Spielfeld gültig ist 
+    /// prüft, ob eine Spalte im aktiven Spielfeld gültig ist (bereits gewonnen Spiele sollten nicht vorkommen)
     /// </summary>
-    /// <param name="row"></param>
-    /// <returns></returns>
+    /// <param name="row">Spalte, welche geprüft werden soll</param>
+    /// <returns>true wenn die Spalte gültig ist</returns>
     static bool ValidRow(string row)
     {
       return !row.Contains("xxxx") && !row.Contains("oooo");
@@ -39,17 +39,31 @@ namespace Research
     /// </summary>
     static void BitChecker()
     {
-      var xMap = Enumerable.Range(0, RowHeight).Select(i => Rows.Where(r => r[RowHeight - 1 - i] == 'x').ToArray()).ToArray();
-      var oMap = Enumerable.Range(0, RowHeight).Select(i => Rows.Where(r => r[RowHeight - 1 - i] == 'o').ToArray()).ToArray();
+      var rowDict = Enumerable.Range(0, AllRows.Length).ToDictionary(i => AllRows[i], i => i);
+
+      var xMap = Enumerable.Range(0, RowHeight).Select(i => new { rows = AllRows.Where(r => r[RowHeight - 1 - i] == 'x' && ValidRow(r)).Select(r => new{row = r,id = rowDict[r]}).ToArray(), keys = new List<KeyValuePair<int, int>>() } ).ToArray();
+      var oMap = Enumerable.Range(0, RowHeight).Select(i => new { rows = AllRows.Where(r => r[RowHeight - 1 - i] == 'o' && ValidRow(r)).Select(r => new{row = r,id = rowDict[r]}).ToArray(), keys = new List<KeyValuePair<int, int>>() } ).ToArray();
+
+      for (int k = 1; k < 256; k++)
+      {
+        for (int v = 0; v < 256; v++)
+        {
+          foreach (var map in xMap)
+          {
+            if (map.rows.All(m => (m.id & k) == v)) map.keys.Add(new KeyValuePair<int, int>(k, v));
+          }
+        }
+      }
+
 
       int stop = 0;
     }
 
     static void Main(string[] args)
     {
-      // RowCounter();
+      RowCounter();
 
-      BitChecker();
+      //BitChecker();
 
       Console.ReadLine();
     }
