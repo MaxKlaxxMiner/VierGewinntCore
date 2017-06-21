@@ -9,81 +9,46 @@ namespace Research
   static partial class Program
   {
     /// <summary>
-    /// mögliche Spielfelder
-    /// ' ' = frei
-    /// 'x' = Spieler 1
-    /// 'o' = Spieler 2
-    /// </summary>
-    static readonly char[] FieldChars = { ' ', 'x', 'o' };
-    /// <summary>
-    /// Anzahl der Felder, welche übeinander in einer Reihe liegen können
-    /// </summary>
-    const int RowHeight = 6;
-    /// <summary>
     /// 127 Varianten, die in einer Senkrechten Reihe vorkommen können (6 Felder hoch)
     /// </summary>
-    static readonly string[] AllRows = RowCounterBase(RowHeight).ToArray();
-
+    static readonly string[] AllRows = RowCounterBase().ToArray();
     /// <summary>
-    /// prüft, ob eine Spalte im aktiven Spielfeld gültig ist (bereits gewonnen Spiele sollten nicht vorkommen)
+    /// 103 Varianten, die in einer Senkrechten Reihe ohne direkten Gewinn vorkommen können (6 Felder hoch)
     /// </summary>
-    /// <param name="row">Spalte, welche geprüft werden soll</param>
-    /// <returns>true wenn die Spalte gültig ist</returns>
-    static bool ValidRow(string row)
+    static readonly string[] AllValidRows = AllRows.Where(ValidRow).ToArray();
+
+    static readonly string[][] XMap = Enumerable.Range(0, RowHeight).Select(i => AllRows.Where(r => r[RowHeight - 1 - i] == 'x' && ValidRow(r)).ToArray()).ToArray();
+    static readonly string[][] OMap = Enumerable.Range(0, RowHeight).Select(i => AllRows.Where(r => r[RowHeight - 1 - i] == 'o' && ValidRow(r)).ToArray()).ToArray();
+
+    struct Solution
     {
-      return !row.Contains("xxxx") && !row.Contains("oooo");
+      public int id;
+      public int result;
     }
 
-    /// <summary>
-    /// Methode zum analysieren und prüfen, ob bestimmte Felder direkt mit Bit-Mustern abgefragt werden können
-    /// </summary>
-    static void BitChecker()
+    static void BruteBitScan1(Calc calc1, int val1)
     {
-      var rowDict = AllRows.ToDictionary(r => r, GetRowId);
+      var sln = new Solution[AllRows.Length];
+      int slnCount = 0;
 
-      var xMap = Enumerable.Range(0, RowHeight).Select(i => new { rows = AllRows.Where(r => r[RowHeight - 1 - i] == 'x' && ValidRow(r)).Select(r => new{row = r,id = rowDict[r]}).ToArray(), keys = new List<KeyValuePair<int, int>>() } ).ToArray();
-      var oMap = Enumerable.Range(0, RowHeight).Select(i => new { rows = AllRows.Where(r => r[RowHeight - 1 - i] == 'o' && ValidRow(r)).Select(r => new{row = r,id = rowDict[r]}).ToArray(), keys = new List<KeyValuePair<int, int>>() } ).ToArray();
-
-      for (int k = 1; k < 256; k++)
+      int id = 0;
+      int result = 0;
+      if (Compare1(id, calc1, val1, result))
       {
-        for (int v = 0; v < 256; v++)
-        {
-          foreach (var map in xMap)
-          {
-            if (map.rows.All(m => (m.id & k) == v)) map.keys.Add(new KeyValuePair<int, int>(k, v));
-          }
-
-          foreach (var map in oMap)
-          {
-            if (map.rows.All(m => (m.id & k) == v)) map.keys.Add(new KeyValuePair<int, int>(k, v));
-          }
-        }
-      }
-
-      int stop = 0;
-    }
-
-    static bool Compare1(int src, Calc calc1, int val1, int result)
-    {
-      switch (calc1)
-      {
-        case Calc.And: return (src & val1) == result;
-        case Calc.Or: return (src | val1) == result;
-        case Calc.Xor: return (src ^ val1) == result;
-        default: throw new NotSupportedException();
+        
       }
     }
 
-    static void BruteBitScan()
+    static void BruteBitScans()
     {
-
+      BruteBitScan1(Calc.And, 0);
     }
 
     static void Main(string[] args)
     {
-      // RowCounter();
+      // TestRowCounter();
 
-      // BitChecker();
+      BruteBitScans();
 
       Console.ReadLine();
     }
