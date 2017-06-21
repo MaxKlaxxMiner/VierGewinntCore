@@ -39,7 +39,7 @@ namespace Research
     /// </summary>
     static void BitChecker()
     {
-      var rowDict = Enumerable.Range(0, AllRows.Length).ToDictionary(i => AllRows[i], i => i);
+      var rowDict = AllRows.ToDictionary(r => r, GetRowId);
 
       var xMap = Enumerable.Range(0, RowHeight).Select(i => new { rows = AllRows.Where(r => r[RowHeight - 1 - i] == 'x' && ValidRow(r)).Select(r => new{row = r,id = rowDict[r]}).ToArray(), keys = new List<KeyValuePair<int, int>>() } ).ToArray();
       var oMap = Enumerable.Range(0, RowHeight).Select(i => new { rows = AllRows.Where(r => r[RowHeight - 1 - i] == 'o' && ValidRow(r)).Select(r => new{row = r,id = rowDict[r]}).ToArray(), keys = new List<KeyValuePair<int, int>>() } ).ToArray();
@@ -52,18 +52,38 @@ namespace Research
           {
             if (map.rows.All(m => (m.id & k) == v)) map.keys.Add(new KeyValuePair<int, int>(k, v));
           }
+
+          foreach (var map in oMap)
+          {
+            if (map.rows.All(m => (m.id & k) == v)) map.keys.Add(new KeyValuePair<int, int>(k, v));
+          }
         }
       }
-
 
       int stop = 0;
     }
 
+    static bool Compare1(int src, Calc calc1, int val1, int result)
+    {
+      switch (calc1)
+      {
+        case Calc.And: return (src & val1) == result;
+        case Calc.Or: return (src | val1) == result;
+        case Calc.Xor: return (src ^ val1) == result;
+        default: throw new NotSupportedException();
+      }
+    }
+
+    static void BruteBitScan()
+    {
+
+    }
+
     static void Main(string[] args)
     {
-      RowCounter();
+      // RowCounter();
 
-      //BitChecker();
+      // BitChecker();
 
       Console.ReadLine();
     }
