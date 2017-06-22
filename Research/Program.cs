@@ -17,47 +17,51 @@ namespace Research
     /// </summary>
     static readonly string[] AllValidRows = AllRows.Where(ValidRow).ToArray();
 
-    static readonly string[][] XMap = Enumerable.Range(0, RowHeight).Select(i => AllRows.Where(r => r[RowHeight - 1 - i] == 'x' && ValidRow(r)).ToArray()).ToArray();
-    static readonly string[][] OMap = Enumerable.Range(0, RowHeight).Select(i => AllRows.Where(r => r[RowHeight - 1 - i] == 'o' && ValidRow(r)).ToArray()).ToArray();
+    static readonly string[][] XMap = Enumerable.Range(0, RowHeight).Select(i => AllValidRows.Where(r => r[RowHeight - 1 - i] == 'x').ToArray()).ToArray();
+    static readonly string[][] OMap = Enumerable.Range(0, RowHeight).Select(i => AllValidRows.Where(r => r[RowHeight - 1 - i] == 'o').ToArray()).ToArray();
 
-    struct Solution
+    public struct MapElement
     {
-      public readonly int id;
-      public readonly int result;
-      public Solution(int id, int result)
+      public readonly int[] trueValues;
+      public readonly int[] falseValues;
+      public readonly char player;
+      public readonly int playerPos;
+      public MapElement(char player, int playerPos)
       {
-        this.id = id;
-        this.result = result;
+        this.player = player;
+        this.playerPos = playerPos;
+        trueValues = AllValidRows.Select((r, i) => new { r, i }).Where(r => r.r[RowHeight - 1 - playerPos] == player).Select(r => r.i).ToArray();
+        falseValues = AllValidRows.Select((r, i) => new { r, i }).Where(r => r.r[RowHeight - 1 - playerPos] != player).Select(r => r.i).ToArray();
+      }
+      public override string ToString()
+      {
+        return (new { player, playerPos, trueValues = string.Join(",", trueValues.Select(i => AllValidRows[i])), falseValues = "int[" + falseValues.Length + "]" }).ToString();
       }
     }
 
-    static void BruteBitScan1Rec(Calc calc1, int val1, Solution[] sln, int slnCount)
+    static readonly MapElement[] XMap2 = Enumerable.Range(0, RowHeight).Select(i => new MapElement('x', i)).ToArray();
+    static readonly MapElement[] OMap2 = Enumerable.Range(0, RowHeight).Select(i => new MapElement('o', i)).ToArray();
+
+    static void FullRowScan()
     {
-      for (int id = 0; id < MaxRowId; id++)
+      for (int i = 0; i < RowHeight; i++)
       {
-        int result = CalcRowId(id, calc1, val1);
-        sln[slnCount] = new Solution(id, result);
-        slnCount++;
+        Console.WriteLine(XMap2[i]);
+        Console.WriteLine();
+      }
+      for (int i = 0; i < RowHeight; i++)
+      {
+        Console.WriteLine(OMap2[i]);
+        Console.WriteLine();
       }
     }
 
-    static void BruteBitScan1(Calc calc1, int val1)
-    {
-      var sln = new Solution[AllRows.Length];
-
-      BruteBitScan1Rec(calc1, val1, sln, 0);
-    }
-
-    static void BruteBitScans()
-    {
-      BruteBitScan1(Calc.And, 0);
-    }
 
     static void Main(string[] args)
     {
       // TestRowCounter();
 
-      BruteBitScans();
+      FullRowScan();
 
       Console.ReadLine();
     }
